@@ -5,50 +5,62 @@ int addsub = 0;
 
 int counter(int addsub) {
     const int DIGIT_A1 = 13;
-	const int DIGIT_B1 = 12;
 	const int DIGIT_A2 = 10;
-	const int DIGIT_B2 = 9;
 	const int DIGIT_A3 = 7;
-	const int DIGIT_B3 = 6;
 	const int DIGIT_A4 = 4;
-	const int DIGIT_B4 = 3;
+
 	const int ADD_SUB = 2;
   
+    
   	Serial.begin(9600);
  	pinMode(DIGIT_A1, OUTPUT);
-	pinMode(DIGIT_B1, OUTPUT);
 	pinMode(DIGIT_A2, OUTPUT);
-	pinMode(DIGIT_B2, OUTPUT);
 	pinMode(DIGIT_A3, OUTPUT);
-	pinMode(DIGIT_B3, OUTPUT);
 	pinMode(DIGIT_A4, OUTPUT);
-	pinMode(DIGIT_B4, OUTPUT);
 	pinMode(ADD_SUB, OUTPUT);
   
 	// set all pins to "0)
 	digitalWrite(DIGIT_A1, 0); //LOW and HIGH just reference 0 & 1
-	digitalWrite(DIGIT_B1, 0);
 	digitalWrite(DIGIT_A2, 0);
- 	digitalWrite(DIGIT_B2, 0);
   	digitalWrite(DIGIT_A3, 0);
-  	digitalWrite(DIGIT_B3, 0);
   	digitalWrite(DIGIT_A4, 0);
-  	digitalWrite(DIGIT_B4, 0);
   	digitalWrite(ADD_SUB, addsub);
 
 	// either adding (0) or subtracting (1)
-  
+	Wire.beginTransmission(9)
   	if (addsub < 2) {
     	Serial.println(addsub);
-     	for (int twosA = 0; twosA <= 1; ++twosA) { // 2A
-       	digitalWrite(DIGIT_A2, twosA);
-       		for (int twosB = 0; twosB <= 1; ++twosB) { // 2B
-         	digitalWrite(DIGIT_B2, twosB);
-          		for (int onesA = 0; onesA <= 1; ++onesA) { // 1A
-            	digitalWrite(DIGIT_A1, onesA);
-            		for (int onesB = 0; onesB <= 1; ++onesB) { // 1B
-              		digitalWrite(DIGIT_B1, onesB);
-              		delay(500);
+     	for (int EightA = 0; twosA <= 1; ++twosA) { // 2A
+       		digitalWrite(DIGIT_A2, twosA);
+       		for (int EightB = 0; twosB <= 1; ++twosB) { // 2B
+         		if (EightB == 0) {
+					Wire.write(128);
+				}
+				if (EightB == 1) {
+					Wire.write(129);
+				}
+          		for (int SevenA = 0; onesA <= 1; ++onesA) { // 1A
+            		digitalWrite(DIGIT_A1, onesA);
+            		for (int SevenB = 0; onesB <= 1; ++onesB) { // 1B
+              			if (SevenB == 0) {
+							Wire.write(64);
+						}
+						if (SevenB == 1) {
+							Wire.write(65);
+						}
+						for (int SixA = 0; twosA <= 1; ++twosA) { // 2A
+       						digitalWrite(DIGIT_A2, twosA);
+       						for (int SixB = 0; twosB <= 1; ++twosB) { // 2B
+         						digitalWrite(DIGIT_B2, twosB);
+          						for (int FiveA = 0; onesA <= 1; ++onesA) { // 1A
+            						digitalWrite(DIGIT_A1, onesA);
+            						for (int FiveB = 0; onesB <= 1; ++onesB) { // 1B
+              							digitalWrite(DIGIT_B1, onesB);
+              						delay(500);
+            						}
+          						}
+        					}
+      					}
             		}
           		}
         	}
@@ -72,27 +84,8 @@ void setup() {
   counter(addsub);
 }
 void loop() {
-  Wire.beginTransmission(9); // transmit to device #9
-  Wire.write(1);              // sends x 
-  digitalWrite(LED, HIGH);
-    delay(300);
-    digitalWrite(LED, LOW);
-    delay(200);
-  Wire.endTransmission();    // stop transmitting
-}
-
-// comment
-
-
-// comment
-void setup() {
-  Serial.print("Starting ... \n\n");
-  counter(addsub);
-}
-
-
-void loop() {
-  // Done
   Serial.print("\nDone. \n");
   delay(100000000); // Wait for 10000 millisecond(s)
 }
+
+// comment
