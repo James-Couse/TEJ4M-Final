@@ -1,17 +1,25 @@
 #include <Wire.h>
+// Include the required Wire library for I2C<br>#include <Wire.h>
 int LED = 13;
-// Include the required Wire library for I2C<br>#include 
+int x = 0;
 void setup() {
-  // Start the I2C Bus as Master
-  Wire.begin(); 
+  // Define the LED pin as Output
   pinMode (LED, OUTPUT);
+  // Start the I2C Bus as Slave on address 9
+  Wire.begin(9); 
+  // Attach a function to trigger when something is received.
+  Wire.onReceive(receiveEvent);
+}
+void receiveEvent(int bytes) {
+  x = Wire.read();    // read one character from the I2C
 }
 void loop() {
-  Wire.beginTransmission(9); // transmit to device #9
-  Wire.write(1);              // sends x 
-  digitalWrite(LED, HIGH);
+  //If value received is 0 blink LED for 200 ms
+  if (x == 1) {
+    digitalWrite(LED, HIGH);
     delay(300);
     digitalWrite(LED, LOW);
     delay(200);
-  Wire.endTransmission();    // stop transmitting
+  }
+  //If value received is 3 blink LED for 400 ms
 }
