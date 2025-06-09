@@ -4,10 +4,14 @@ int addsub = 0;
 // Include the required Wire library for I2C<br>#include 
 
 int counter(int addsub) {
-    const int DIGIT_A1 = 13;
-	const int DIGIT_A2 = 10;
-	const int DIGIT_A3 = 7;
-	const int DIGIT_A4 = 4;
+    const int DIGIT_A1 = 4;
+	const int DIGIT_A2 = 5;
+	const int DIGIT_A3 = 6;
+	const int DIGIT_A4 = 7;
+	const int DIGIT_A5 = 8;
+	const int DIGIT_A6 = 9;
+	const int DIGIT_A7 = 10;
+	const int DIGIT_A8 = 11;
 
 	const int ADD_SUB = 2;
   
@@ -17,6 +21,10 @@ int counter(int addsub) {
 	pinMode(DIGIT_A2, OUTPUT);
 	pinMode(DIGIT_A3, OUTPUT);
 	pinMode(DIGIT_A4, OUTPUT);
+	pinMode(DIGIT_A5, OUTPUT);
+	pinMode(DIGIT_A6, OUTPUT);
+	pinMode(DIGIT_A7, OUTPUT);
+	pinMode(DIGIT_A8, OUTPUT);
 	pinMode(ADD_SUB, OUTPUT);
   
 	// set all pins to "0)
@@ -24,6 +32,10 @@ int counter(int addsub) {
 	digitalWrite(DIGIT_A2, 0);
   	digitalWrite(DIGIT_A3, 0);
   	digitalWrite(DIGIT_A4, 0);
+	digitalWrite(DIGIT_A5, 0); //LOW and HIGH just reference 0 & 1
+	digitalWrite(DIGIT_A6, 0);
+  	digitalWrite(DIGIT_A7, 0);
+  	digitalWrite(DIGIT_A8, 0);
   	digitalWrite(ADD_SUB, addsub);
 
 	// either adding (0) or subtracting (1)
@@ -31,7 +43,7 @@ int counter(int addsub) {
   	if (addsub < 2) {
     	Serial.println(addsub);
      	for (int EightA = 0; EightA <= 1; ++EightA) { // 2A
-       		digitalWrite(DIGIT_A2, EightA);
+       		digitalWrite(DIGIT_A8, EightA);
        		for (int EightB = 0; EightB <= 1; ++EightB) { // 2B
          		if (EightB == 0) {
 					Wire.write(1280);
@@ -40,7 +52,7 @@ int counter(int addsub) {
 					Wire.write(1281);
 				}
           		for (int SevenA = 0; SevenA <= 1; ++onSevenAesA) { // 1A
-            		digitalWrite(DIGIT_A1, SevenA);
+            		digitalWrite(DIGIT_A7, SevenA);
             		for (int SevenB = 0; SevenB <= 1; ++SevenB) { // 1B
               			if (SevenB == 0) {
 							Wire.write(640);
@@ -49,7 +61,7 @@ int counter(int addsub) {
 							Wire.write(641);
 						}
 						for (int SixA = 0; SixA <= 1; ++SixA) { // 2A
-       						digitalWrite(DIGIT_A2, SixA);
+       						digitalWrite(DIGIT_A6, SixA);
        						for (int SixB = 0; SixB <= 1; ++SixB) { // 2B
          						if (SixB == 0) {
 									Wire.write(320);
@@ -58,7 +70,7 @@ int counter(int addsub) {
 									Wire.write(321);
 								}
           						for (int FiveA = 0; FiveA <= 1; ++FiveA) { // 1A
-            						digitalWrite(DIGIT_A1, FiveA);
+            						digitalWrite(DIGIT_A5, FiveA);
             						for (int FiveB = 0; FiveB <= 1; ++FiveB) { // 1B
               							if (FiveB == 0) {
 											Wire.write(160);
@@ -67,7 +79,7 @@ int counter(int addsub) {
 											Wire.write(161);
 										}
 										for (int FourA = 0; FourA <= 1; ++FourA) { // 2A
-       										digitalWrite(DIGIT_A2, FourA);
+       										digitalWrite(DIGIT_A4, FourA);
        										for (int FourB = 0; FourB <= 1; ++FourB) { // 2B
          										if (FourB == 0) {
 													Wire.write(80);
@@ -76,7 +88,7 @@ int counter(int addsub) {
 													Wire.write(81);
 												}
 												for (int ThreeA = 0; ThreeA <= 1; ++ThreeA) { // 1A
-													digitalWrite(DIGIT_A1, ThreeA);
+													digitalWrite(DIGIT_A3, ThreeA);
 													for (int ThreeB = 0; ThreeB <= 1; ++ThreeB) { // 1B
 														if (ThreeB == 0) {
 															Wire.write(40);
@@ -98,7 +110,7 @@ int counter(int addsub) {
 																	for (int OneB = 0; OneB <= 1; ++OneB) { // 1B
 																		if (OneB == 0) {
 																			Wire.write(10);
-																		}
+																		}  
 																		if (OneB == 1) {
 																			Wire.write(11);
 																		}
