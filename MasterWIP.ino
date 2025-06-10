@@ -1,7 +1,6 @@
 #include <Wire.h>
 int LED = 13;
 int addsub = 0;
-// Include the required Wire library for I2C<br>#include 
 
 int counter(int addsub) {
     const int DIGIT_A1 = 4;
@@ -39,7 +38,7 @@ int counter(int addsub) {
   	digitalWrite(ADD_SUB, addsub);
 
 	// either adding (0) or subtracting (1)
-	Wire.beginTransmission(9)
+	Wire.beginTransmission(9);
   	if (addsub < 2) {
     	Serial.println(addsub);
      	for (int EightA = 0; EightA <= 1; ++EightA) { // 2A
@@ -47,11 +46,12 @@ int counter(int addsub) {
        		for (int EightB = 0; EightB <= 1; ++EightB) { // 2B
          		if (EightB == 0) {
 					Wire.write(1280);
+        
 				}
 				if (EightB == 1) {
 					Wire.write(1281);
 				}
-          		for (int SevenA = 0; SevenA <= 1; ++onSevenAesA) { // 1A
+          		for (int SevenA = 0; SevenA <= 1; ++SevenA) { // 1A
             		digitalWrite(DIGIT_A7, SevenA);
             		for (int SevenB = 0; SevenB <= 1; ++SevenB) { // 1B
               			if (SevenB == 0) {
@@ -110,9 +110,11 @@ int counter(int addsub) {
 																	for (int OneB = 0; OneB <= 1; ++OneB) { // 1B
 																		if (OneB == 0) {
 																			Wire.write(10);
+                                                                            Serial.println("sending 10");
 																		}  
 																		if (OneB == 1) {
 																			Wire.write(11);
+                                                                            Serial.println("sending 11");
 																		}
               														delay(500);
 																	}
