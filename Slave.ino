@@ -9,8 +9,8 @@ const int DIGIT_B6 = 9;
 const int DIGIT_B7 = 10;
 const int DIGIT_B8 = 11;
 
-int x = 0;
-int y = 0;
+int valReceived = 0;
+int pinOut = 0;
 int bitStatus = 0;
 int bitNumber = 0;
 void setup() {
@@ -36,28 +36,29 @@ void setup() {
   
     Wire.onReceive(receiveEvent);
 }
+// tells what digit to do what based on the received data
 void receiveEvent(int bytes) {
-  x = Wire.read();
-  Serial.println(x);
-  bitStatus = x %10;
-  bitNumber = (x - bitStatus) / 10;
-  // Serial.println(bitNumber);
-  // Serial.println(bitStatus);
-  switch (bitNumber) {
-      case 128: y = 8; break;
-      case 64: y = 7; break;
-      case 32: y = 6; break;
-      case 16: y = 5; break;
-      case 8: y = 4; break;
-      case 4: y = 3; break;
-      case 2: y = 2; break;
-      case 1: y = 1; break;
-  }
-  // Serial.print(y);
-  // Serial.print(" transposed # is "); 
-  // Serial.println(y + 3);
-  digitalWrite(y + 3, bitStatus);
-  Serial.println("---");
+    valReceived = Wire.read();
+    /* Naming convention for what output does what is weird.
+    For example if the received value is "641" the final digit
+    gets split off, so it becomes "64" and "1", meaning the 64s
+    bit gets turned to 1/high. 80 would be 8s digit turn off.*/
+    Serial.println(valReceived);
+    Serial.println("---");
+    bitStatus = valReceived %10; // seperates final digit
+    bitNumber = (valReceived - bitStatus) / 10; // determines what digit is changed
+   
+    switch (bitNumber) { // selects the correct output pin for the digit
+        case 128: pinOut = 8; break;
+        case 64: pinOut = 7; break;
+        case 32: pinOut = 6; break;
+        case 16: pinOut = 5; break;
+        case 8: pinOut = 4; break;
+        case 4: pinOut = 3; break;
+        case 2: pinOut = 2; break;
+        case 1: pinOut = 1; break;
+    }
+    digitalWrite(pinOut + 3, bitStatus);
 }
 void loop() {
 }
